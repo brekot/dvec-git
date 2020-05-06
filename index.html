@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="js bx-core bx-no-touch bx-no-retina bx-firefox no-save-data network-unknown webp js-focus-visible ready-js" lang="ru">
+<html lang="ru">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -32,9 +32,6 @@
 	<script src="/files/app.js"></script>
 	<script src="/files.js"></script>
     <!-- /head-js -->
-
-	<script src="/js/jquery.mask.min.js"></script>
-	<script src="/js/script.js"></script>
 
     <link href="/files/app.css" rel="stylesheet">
 	<link href="/files/correction.css" rel="stylesheet">
@@ -1113,63 +1110,78 @@
         </div>
     </footer>
 
-<!-- Modal -->
-<div class="modal fade" id="ModalCallback" tabindex="-1" role="dialog" aria-labelledby="ModalCallbackTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">Закажите обратный звонок, и мы перезвоним в&nbsp;удобное Вам время:</h4>
-			</div>
-			<div class="modal-body">
-				<form id="itc-form">
-					<div class="form-group">
-						<label for="itc-phone" class="col-form-label">Ваш телефон:</label>
-						<input type="tel" class="form-control" id="itc-phone" placeholder="+7 (914) 123-45-67">
-					</div>
-					<div class="form-group">
-						<label for="itc-fio" class="col-form-label">ФИО:</label>
-						<input type="text" class="form-control" id="itc-fio">
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Удобное время для звонка:</label>
-						<div class="form-row align-items-center">
-							<div class="col-md-1">
-								С
-							</div>
-							<div class="col-md-3">
-								<select id="itc-time-from" class="form-control"></select>
-							</div>
-							<div class="col-md-1 text-center">
-								до
-							</div>
-							<div class="col-md-3">
-								<select id="itc-time-to" class="form-control"></select>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="itc-theme" class="col-form-label">Тема обращения:</label>
-						<select id="itc-theme" class="form-control">
-							<option value="" selected disabled>Выберите...</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="itc-email" class="col-form-label">Ваш адрес электронной почты:</label>
-						<input type="email" class="form-control" id="itc-email" placeholder="adres@mail.ru">
-						<small class="form-text text-muted">
-							ПАО «ДЭК» проинформирует Вас посредством электронной почты о времени совершенного звонка, 
-							в случае если до Вас дозвониться не удалось. Поле не является обязательным для заполнения.
-						</small>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-				<button type="button" class="btn btn-primary" id="itc-send">Отправить</button>
-			</div>
-		</div>
-	</div>
-</div>
+    <!-- Подключение IntelTelecom -->
+	<script src="/js/jquery.mask.min.js"></script>
+    <script>
+        var itcParams = {
+            time_form: '08:30', // string '00:00' - перезвонить С
+            time_to: '21:30', // string '00:00' - перезвонить ДО
+            phone_mask: '+7 (000) 000-00-00', // string или false - маска телефона
+            phone_count: 18, // int или false - количество знаков телефона
+            fio_count: 5, // int или false - минимальное количество знаков в фио
+            url: '//ccserver.infinity.ru:8443/data/scenario/?ScenarioName=callback', // string - адрес отправки
+            text_success: 'Спасибо, менеджеры свяжутся с вами в ближайшее время!', // string - текст удачной отправки
+            theme: ['Адреса и телефоны отделений', 'Внесение изменений в лицевой счет', 'Договор энергоснабжения', 'Дополнительные платные сервисы', 'Интернет-поддержка'],
+        };
+    </script>
+	<script src="/js/itc.js"></script>
+
+    <div class="modal fade" id="ModalCallback" tabindex="-1" role="dialog" aria-labelledby="ModalCallbackTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Закажите обратный звонок, и мы перезвоним в&nbsp;удобное Вам время:</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="itc-form">
+                        <div class="form-group">
+                            <label for="itc-phone" class="col-form-label">Ваш телефон:</label>
+                            <input type="tel" class="form-control" id="itc-phone" placeholder="+7 (914) 123-45-67">
+                        </div>
+                        <div class="form-group">
+                            <label for="itc-fio" class="col-form-label">ФИО:</label>
+                            <input type="text" class="form-control" id="itc-fio">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Удобное время для звонка:</label>
+                            <div class="form-row align-items-center">
+                                <div class="col-md-1">
+                                    С
+                                </div>
+                                <div class="col-md-3">
+                                    <select id="itc-time-from" class="form-control"></select>
+                                </div>
+                                <div class="col-md-1 text-center">
+                                    до
+                                </div>
+                                <div class="col-md-3">
+                                    <select id="itc-time-to" class="form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="itc-theme" class="col-form-label">Тема обращения:</label>
+                            <select id="itc-theme" class="form-control">
+                                <option value="" selected disabled>Выберите...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="itc-email" class="col-form-label">Ваш адрес электронной почты:</label>
+                            <input type="email" class="form-control" id="itc-email" placeholder="adres@mail.ru">
+                            <small class="form-text text-muted">
+                                ПАО «ДЭК» проинформирует Вас посредством электронной почты о времени совершенного звонка, 
+                                в случае если до Вас дозвониться не удалось. Поле не является обязательным для заполнения.
+                            </small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" id="itc-send">Отправить</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
