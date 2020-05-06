@@ -1,0 +1,6 @@
+<?
+$sSectionName = "dvec";
+$arDirProperties = Array(
+
+);
+?>
